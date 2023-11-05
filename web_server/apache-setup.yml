@@ -7,7 +7,6 @@
       src: alias.conf
       dest: /var/www/html/index.html
       force: yes
-    notify: restart httpd
   - ansible.posix.firewalld:
       service: "{{ item }}"
       permanent: true
@@ -15,16 +14,4 @@
     loop:
       - http
       - https
-    notify: restart firewalld
 
-  handlers:
-    - name: restart httpd
-      ansible.builtin.service:
-        name: httpd
-        state: restarted
-        enabled: yes
-    - name: restart firewalld
-      ansible.builtin.service:
-        name: firewalld
-        state: restarted
-        enabled: yes
